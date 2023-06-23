@@ -1,3 +1,4 @@
+import Title from "@/components/Title";
 import Image from "next/image";
 
 export default function Home() {
@@ -13,10 +14,7 @@ export default function Home() {
         </div>
         <div className="flex-1 flex flex-col items-center gap-8">
           {/* Title Text Start */}
-          <div className="flex flex-col justify-center items-center text-center gap-2">
-            <h1 className="text-2xl font-bold">Atur Tempo</h1>
-            <h2 className="text-sm">Demi ketukan yang selaras</h2>
-          </div>
+          <Title title="Atur Tempo" subtitle="Demi ketukan yang selaras" />
           {/* Title Text End */}
           <div className="w-full max-w-sm px-4 flex flex-col gap-4 text-center items-center justify-center">
             <div className="w-full flex gap-4">
