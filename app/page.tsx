@@ -9,7 +9,14 @@ export default function Home() {
         <div className="flex-1 lg:flex-[2]">
           {/* Image Start */}
           <div className="w-full h-full object-fill relative">
-            <Image src={"/images/home.png"} alt="home" fill className="object-contain" sizes="flex" priority />
+            <Image
+              src={"/images/home.png"}
+              alt="home"
+              fill
+              className="object-contain"
+              sizes="flex"
+              priority
+            />
           </div>
           {/* Image End */}
         </div>
