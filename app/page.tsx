@@ -1,6 +1,12 @@
+import Title from "@/components/Title";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
+  const titleText = {
+    main: "",
+    sub: "",
+  };
   return (
     <div className="container mx-auto">
       <div className="flex flex-col w-full h-screen">
@@ -13,15 +19,18 @@ export default function Home() {
         </div>
         <div className="flex-1 flex flex-col items-center gap-8">
           {/* Title Text Start */}
-          <div className="flex flex-col justify-center items-center text-center gap-2">
-            <h1 className="text-2xl font-bold">Gitaris Tongkrongan App</h1>
-            <h2 className="text-sm w-2/3">Demi melayani tongkrongan sebaik-baiknya</h2>
-          </div>
+          <Title
+            title="Gitaris Tongkrongan App"
+            subtitle="Demi melayani tongkrongan sebaik-baiknya"
+          />
           {/* Title Text End */}
           <div className="flex flex-col gap-4 items-center justify-center">
-            <button className="bg-black text-white w-40 p-2">Setel Gitar</button>
-            <button className="bg-black text-white w-40 p-2">Atur Tempo</button>
-            <button className="bg-black text-white w-40 p-2">Contekan</button>
+            <Link href="/setel">
+              <button className="bg-black text-white w-40 p-2">Setel Gitar</button>
+            </Link>
+            <Link href="/tempo">
+              <button className="bg-black text-white w-40 p-2">Atur Tempo</button>
+            </Link>
           </div>
         </div>
       </div>
