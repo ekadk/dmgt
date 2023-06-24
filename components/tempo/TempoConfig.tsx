@@ -1,5 +1,3 @@
-"use client"
-
 const TempoConfig = () => {
   return (
     <>
@@ -8,23 +6,22 @@ const TempoConfig = () => {
           <div className="flex-1">
             <h3 className="mb-2">BPM:</h3>
             <select className="w-full border border-black p-2">
-              <option>60</option>
-              <option>70</option>
-              <option>80</option>
-              <option>90</option>
-              <option>100</option>
+              {BPM.map((el, idx) => (
+                <option key={idx} value={el}>
+                  {el}
+                </option>
+              ))}
             </select>
           </div>
 
           <div className="flex-1">
             <h3 className="mb-2">Subdivision:</h3>
             <select className="w-full border border-black p-2">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-              <option>6</option>
+              {subdiv.map((el, idx) => (
+                <option key={idx} value={el}>
+                  {el}
+                </option>
+              ))}
             </select>
           </div>
         </div>
@@ -33,5 +30,16 @@ const TempoConfig = () => {
     </>
   );
 };
+
+//----------------------------
+// Number Sequence Generator |
+// --------------------------
+
+const generateSequence = (start: number, end: number, step: number) => {
+  return Array.from({ length: (end - start) / step + 1 }, (_, i) => start + i * step);
+};
+
+const BPM = generateSequence(60, 200, 5);
+const subdiv = generateSequence(1, 6, 1);
 
 export default TempoConfig;
