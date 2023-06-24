@@ -1,6 +1,6 @@
 import Title from "@/components/Title";
+import TempoConfig from "@/components/tempo/TempoConfig";
 import Image from "next/image";
-import Link from "next/link";
 
 export default function Home() {
   return (
@@ -10,31 +10,21 @@ export default function Home() {
           {/* Image Start */}
           <div className="w-full aspect-square max-w-md object-fill relative lg:max-w-full">
             <Image
-              src={"/images/home.png"}
+              src={"/images/metronome.png"}
               alt="home"
               fill
-              className="object-contain"
               sizes="flex"
               priority
+              className="object-contain"
             />
           </div>
           {/* Image End */}
         </div>
         <div className="flex lg:flex-1 lg:w-full lg:h-full p-4 justify-center items-start lg:justify-start lg:items-center">
-          <div className="flex flex-col justify-center items-center gap-8 lg:border lg:border-black lg:rounded-xl lg:p-8">
-            {/* Title Text Start */}
-            <Title
-              title="Gitaris Tongkrongan App"
-              subtitle="Demi melayani tongkrongan sebaik-baiknya"
-            />
-            {/* Title Text End */}
-            <div className="flex flex-col gap-4 items-center justify-center">
-              <Link href="/setel">
-                <button className="bg-black text-white w-40 p-2">Setel Gitar</button>
-              </Link>
-              <Link href="/tempo">
-                <button className="bg-black text-white w-40 p-2">Atur Tempo</button>
-              </Link>
+          <div className="flex flex-col justify-center items-center gap-8 w-full max-w-sm lg:border lg:border-black lg:rounded-xl lg:p-8">
+            <Title title="Atur Tempo" subtitle="Demi ketukan yang selaras" />
+            <div className="w-full max-w-sm px-4 flex items-center justify-center">
+              <TempoConfig />
             </div>
           </div>
         </div>
