@@ -1,10 +1,5 @@
 "use client";
-import { arrayOfWav } from "@/lib/getWavNames";
 import { useState } from "react";
-
-type props = {
-  wavFiles: arrayOfWav;
-};
 
 type tuneKey = {
   name: string;
