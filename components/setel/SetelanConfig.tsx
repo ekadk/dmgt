@@ -82,8 +82,8 @@ const SetelanConfig = () => {
         <table className="w-full">
           <thead>
             <tr>
-              <td className="w-1/3">Senar</td>
-              <td className="w-1/3">Nada</td>
+              <td className="w-1/3 border">Senar</td>
+              <td className="w-1/3 border">Nada</td>
               <td className="w-1/3"></td>
             </tr>
           </thead>
@@ -91,20 +91,20 @@ const SetelanConfig = () => {
             {currentTuning.split(" ").map((el, idx) => {
               return (
                 <tr key={idx}>
-                  <td>{6 - idx}</td>
-                  <td>{el}</td>
-                  <td id={`string-${6 - idx}`}>
+                  <td className="border p-4">{6 - idx}</td>
+                  <td className="border p-4">{el}</td>
+                  <td className="p-2" id={`string-${6 - idx}`}>
                     <audio src={`wav/${el}.wav`} typeof="audio/wav" loop />
                     {playedAudio == 6 - idx ? (
                       <button
-                        className="w-full text-white bg-black"
+                        className="p-2 w-full border border-black"
                         onClick={() => stopAudio(6 - idx)}
                       >
                         Stop
                       </button>
                     ) : (
                       <button
-                        className="w-full text-white bg-black"
+                        className="p-2 w-full text-white bg-black"
                         onClick={() => playAudio(6 - idx)}
                       >
                         Play
