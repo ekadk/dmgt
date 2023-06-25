@@ -1,11 +1,66 @@
 "use client";
-import React, { useState } from "react";
+import { arrayOfWav } from "@/lib/getWavNames";
+import { useState } from "react";
+
+type props = {
+  wavFiles: arrayOfWav;
+};
+
+type tuneKey = {
+  name: string;
+  notes: string;
+};
 
 const SetelanConfig = () => {
-  const [pilihan, setPilihan] = useState(0);
+  // State to check current selected tuning
+  const [currentTuning, setCurrentTuning] = useState("E2 A2 D3 G3 B3 E4");
 
-  const gantiPilihan = (value: number) => {
-    setPilihan(value);
+  // State to which audio is played
+  const [playedAudio, setPlayedAudio] = useState(0);
+
+  //----------------------------------------------
+  // Function to change which tuning is selected |
+  //---------------------------------------------
+
+  const changeTuning = (e: string) => {
+    setPlayedAudio(0);
+    setCurrentTuning(e);
+  };
+
+  //-----------------------
+  // Play Selected String |
+  //-----------------------
+
+  const playAudio = (playedString: number) => {
+    // Change played string
+    setPlayedAudio(playedString);
+
+    // Pause all audio, and set the time to 0
+    const audios = document.querySelectorAll("audio");
+    audios.forEach((el) => {
+      el.pause();
+      el.currentTime = 0;
+    });
+
+    // Select string to play
+    const stringToPlay = document.getElementById(`string-${playedString}`);
+
+    // Get the audio element
+    const currentString = stringToPlay?.querySelector("audio");
+
+    // Play the selected audio element
+    currentString?.play();
+  };
+
+  //-----------------------
+  // Stop Selected String |
+  //-----------------------
+
+  const stopAudio = (playedString: number) => {
+    setPlayedAudio(0);
+    const stringToStop = document.getElementById(`string-${playedString}`);
+    const currentString = stringToStop?.querySelector("audio");
+    currentString?.pause();
   };
 
   return (
@@ -14,118 +69,70 @@ const SetelanConfig = () => {
       <div>
         <h2 className="text-center mb-2">Pilih setelan:</h2>
         <form>
-
-        <select
-          defaultValue={setelan[pilihan].name}
-          onChange={(e) => {
-            gantiPilihan(Number.parseInt(e.target.value));
-          }}
-          className="border border-black p-2 w-60"
-        >
-          {setelan.map((el, idx) => (
-            <option key={idx} value={idx}>
-              {el.name}
-            </option>
-          ))}
-        </select>
+          <select
+            defaultValue={currentTuning}
+            onChange={(e) => changeTuning(e.target.value)}
+            className="border border-black p-2 w-60"
+          >
+            {tunings.map((el: tuneKey, idx) => {
+              return <option key={idx} value={el.notes}>{`${el.name} (${el.notes})`}</option>;
+            })}
+          </select>
         </form>
       </div>
       {/* Pilih Setelan End */}
 
       {/* Senar Start */}
-      <div className="w-40 flex text-center justify-between mb-8">
-        <div className="flex flex-col gap-4">
-          <div>Senar</div>
-
-          {/* Senar Row Start */}
-          {setelan[pilihan].notes.map((el, idx) => {
-            return (
-              <div key={idx}>
-                <p>{el.string}</p>
-              </div>
-            );
-          })}
-          {/* Senar Row End */}
-        </div>
-        <div className="flex flex-col gap-4">
-          <div>Nada</div>
-          {/* Nada Row Start */}
-          {setelan[pilihan].notes.map((el, idx) => {
-            return (
-              <div key={idx}>
-                <p>{el.key}</p>
-              </div>
-            );
-          })}
-          {/* Nada Row End */}
-        </div>
-        <div>
-          <div>Tombol</div>
-        </div>
+      <div className="w-full flex flex-col text-center justify-between mb-4">
+        <table className="w-full">
+          <thead>
+            <tr>
+              <td className="w-1/3">Senar</td>
+              <td className="w-1/3">Nada</td>
+              <td className="w-1/3"></td>
+            </tr>
+          </thead>
+          <tbody>
+            {currentTuning.split(" ").map((el, idx) => {
+              return (
+                <tr key={idx}>
+                  <td>{6 - idx}</td>
+                  <td>{el}</td>
+                  <td id={`string-${6 - idx}`}>
+                    <audio src={`wav/${el}.wav`} typeof="audio/wav" loop />
+                    {playedAudio == 6 - idx ? (
+                      <button
+                        className="w-full text-white bg-black"
+                        onClick={() => stopAudio(6 - idx)}
+                      >
+                        Stop
+                      </button>
+                    ) : (
+                      <button
+                        className="w-full text-white bg-black"
+                        onClick={() => playAudio(6 - idx)}
+                      >
+                        Play
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </>
   );
 };
 
-const setelan = [
-  {
-    name: "Standard (E A D G B E)",
-    notes: [
-      {
-        string: 6,
-        key: "E",
-      },
-      {
-        string: 5,
-        key: "A",
-      },
-      {
-        string: 4,
-        key: "D",
-      },
-      {
-        string: 3,
-        key: "G",
-      },
-      {
-        string: 2,
-        key: "B",
-      },
-      {
-        string: 1,
-        key: "E",
-      },
-    ],
-  },
-  {
-    name: "Drop D (D A D G B E)",
-    notes: [
-      {
-        string: 6,
-        key: "D",
-      },
-      {
-        string: 5,
-        key: "A",
-      },
-      {
-        string: 4,
-        key: "D",
-      },
-      {
-        string: 3,
-        key: "G",
-      },
-      {
-        string: 2,
-        key: "B",
-      },
-      {
-        string: 1,
-        key: "E",
-      },
-    ],
-  },
+//-------------------
+// Available tunings |
+//-------------------
+
+const tunings = [
+  { name: "Standard", notes: "E2 A2 D3 G3 B3 E4" },
+  { name: "Drop D", notes: "D2 A2 D3 G3 B3 E4" },
 ];
 
 export default SetelanConfig;
